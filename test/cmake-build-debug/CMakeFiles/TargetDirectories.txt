@@ -1,0 +1,3 @@
+C:/Users/Guest1/Desktop/huawei/test/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Guest1/Desktop/huawei/test/cmake-build-debug/CMakeFiles/test.dir
+C:/Users/Guest1/Desktop/huawei/test/cmake-build-debug/CMakeFiles/edit_cache.dir
