@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/sourceCode.dir/main.cpp.obj"
-  "sourceCode.pdb"
+  "libsourceCode.dll.a"
   "sourceCode.exe"
   "sourceCode.exe.manifest"
-  "libsourceCode.dll.a"
+  "sourceCode.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/Guest1/Desktop/huawei/sourceCode/main.cpp" "C:/Users/Guest1/Desktop/huawei/sourceCode/cmake-build-debug/CMakeFiles/sourceCode.dir/main.cpp.obj"
+  "D:/huawei/huiwei_project2/HuaWei_CodeCraft_2020/sourceCode/main.cpp" "D:/huawei/huiwei_project2/HuaWei_CodeCraft_2020/sourceCode/cmake-build-debug/CMakeFiles/sourceCode.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

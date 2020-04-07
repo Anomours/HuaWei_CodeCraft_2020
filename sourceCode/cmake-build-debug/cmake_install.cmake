@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Guest1/Desktop/huawei/sourceCode
+# Install script for directory: D:/huawei/huiwei_project2/HuaWei_CodeCraft_2020/sourceCode
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Guest1/Desktop/huawei/sourceCode/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/huawei/huiwei_project2/HuaWei_CodeCraft_2020/sourceCode/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

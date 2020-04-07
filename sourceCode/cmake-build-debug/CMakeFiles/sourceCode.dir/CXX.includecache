@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Guest1/Desktop/huawei/sourceCode/main.cpp
+D:/huawei/huiwei_project2/HuaWei_CodeCraft_2020/sourceCode/main.cpp
 iostream
 -
 vector
@@ -24,5 +24,7 @@ unordered_map
 cstring
 -
 algorithm
+-
+stack
 -
 
