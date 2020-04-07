@@ -8,6 +8,7 @@
 #include <cstring>
 #include <algorithm>
 #include <stack>
+#include <stdlib.h>
 using namespace std;
 //const int MAX_EDGE = 100000000;
 struct Edge{
@@ -53,65 +54,78 @@ private:
     bool checkDoubleCircle(int circle [], int size, int vertexID);
 
 };
+
 void Discirminant::readTestData(string path) {
     clock_t startTime,endTime;
     startTime = clock();
 
-    ifstream inStream(path.c_str());
-    string line;
-
-    if(!inStream){
+    FILE* stream = fopen("../data/test_data.txt", "rb");
+    if(!stream){
         cout<<"File Open failed!"<<endl;
         exit(0);
     }
-    int e=0;
-    while(inStream){
-        getline(inStream,line);
-        e++;
-        if(line.empty()) continue;
 
-        stringstream sin(line);
-        string s;
+    const int MAX=60*1024*1024;
+    char* buf=(char *)malloc(sizeof(char)*MAX);
+    memset(buf, 0, MAX);
 
-        int UID,CID,money;
-        char ch;
-        sin >> UID;
-        sin >> ch;
-        sin >> CID;
-        sin >> ch;
-        sin >>money;
-        sin.clear();
+    int len = fread(buf, sizeof(char), MAX, stream);
+    *(buf+len)='\0';
+    fclose(stream);
 
-        //入度表中有UID的key值，就不用再初始化，CID的入度+1
-        if(inEdgeMap.find(UID)!=inEdgeMap.end()){
-            inEdgeMap[CID]++;
-        }else {//入度表中没有UID的key值，插入并初始化为0
-            inEdgeMap[UID] = 0;
-            inEdgeMap[CID]++;
-        }
+    // 输出读取的结果到屏幕
+    //printf("%s\n", buf);
 
-        //插入到表中
-        unordered_map<int,Vertex>::iterator iter = graph.find(UID);
-        if(iter != graph.end()){
-            //已经存在key
-            iter->second.ID = UID;
-            Edge edge(CID,money);
-            iter->second.edgeList.push_back(edge);
+    int res=0;
+    int cnt=1;
+    int UID,CID,money;
+    for(char*p=buf;(*p)!='\0';++p) {
+        //遇到数字
+        if(*p>='0' && *p<='9') {
+            res = res * 10 + *p - '0';
+        //遇到第一个逗号
+        }else if (*p ==',' && cnt==1) {
+            UID = res;
+            res=0;
+            cnt++;
+        //遇到第二个逗号
+        }else if(*p ==',' && cnt==2){
+            CID = res;
+            res=0;
+            cnt++;
+        //遇到换行符
+        }else if(*p=='\n'){
+            money=res;
+            res=0;
+            cnt=1;
+            //printf("UID:%d CID:%d money:%d\n",UID,CID,money);
+            //入度表中有UID的key值，就不用再初始化，CID的入度+1
+            if(inEdgeMap.find(UID)!=inEdgeMap.end()){
+                inEdgeMap[CID]++;
+            }else {//入度表中没有UID的key值，插入并初始化为0
+                inEdgeMap[UID] = 0;
+                inEdgeMap[CID]++;
+            }
 
-        } else{
-            //不存在key
-            nodeNum++;
-            Vertex vertex;
-            vertex.ID = UID;
-            vertex.edgeList.push_back({CID,money});
-            graph[UID] = vertex;
+            //插入到表中
+            unordered_map<int,Vertex>::iterator iter = graph.find(UID);
+            if(iter != graph.end()){
+                //已经存在key
+                iter->second.ID = UID;
+                Edge edge(CID,money);
+                iter->second.edgeList.push_back(edge);
+            } else{
+                //不存在key
+                nodeNum++;
+                Vertex vertex;
+                vertex.ID = UID;
+                vertex.edgeList.push_back({CID,money});
+                graph[UID] = vertex;
+            }
         }
     }
-    inStream.close();
-
     //拓扑排序，排除掉不可能成环的顶点
     topSort();
-
     endTime = clock();
     double totalTime = double(endTime - startTime)/CLOCKS_PER_SEC;
     cout<<"ifstream running time:"<<totalTime<<"s"<<endl;
@@ -349,7 +363,7 @@ void Discirminant::run() {
 
 int main() {
     //system("chcp 65001"); //解决win下打印出乱码的问题
-    string testFile = "../data/test_data.txt";
+    string testFile = "../data/myText.txt";
     string resultFile = "../projects/student/result.txt";
 
     clock_t startTime,endTime,endTime1;
