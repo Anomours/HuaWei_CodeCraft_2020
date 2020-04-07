@@ -55,6 +55,70 @@ private:
 
 };
 
+//fstream的方式读数据
+/*
+void Discirminant::readTestData(string path) {
+    clock_t startTime,endTime;
+    startTime = clock();
+
+    ifstream inStream(path.c_str());
+    string line;
+
+    if(!inStream){
+        cout<<"File Open failed!"<<endl;
+        exit(0);
+    }
+    while(inStream){
+        getline(inStream,line);
+        if(line.empty()) continue;
+
+        stringstream sin(line);
+        string s;
+
+        int UID,CID,money;
+        char ch;
+        sin >> UID;
+        sin >> ch;
+        sin >> CID;
+        sin >> ch;
+        sin >>money;
+        sin.clear();
+
+        //入度表中有UID的key值，就不用再初始化，CID的入度+1
+        if(inEdgeMap.find(UID)!=inEdgeMap.end()){
+            inEdgeMap[CID]++;
+        }else {//入度表中没有UID的key值，插入并初始化为0
+            inEdgeMap[UID] = 0;
+            inEdgeMap[CID]++;
+        }
+
+        //插入到表中
+        unordered_map<int,Vertex>::iterator iter = graph.find(UID);
+        if(iter != graph.end()){
+            //已经存在key
+            iter->second.ID = UID;
+            Edge edge(CID,money);
+            iter->second.edgeList.push_back(edge);
+
+        } else{
+            //不存在key
+            nodeNum++;
+            Vertex vertex;
+            vertex.ID = UID;
+            vertex.edgeList.push_back({CID,money});
+            graph[UID] = vertex;
+        }
+    }
+    inStream.close();
+    //拓扑排序，排除掉不可能成环的顶点
+    topSort();
+    endTime = clock();
+    double totalTime = double(endTime - startTime)/CLOCKS_PER_SEC;
+    cout<<"ifstream running time:"<<totalTime<<"s"<<endl;
+}
+*/
+
+//fread的方式读数据
 void Discirminant::readTestData(string path) {
     clock_t startTime,endTime;
     startTime = clock();
@@ -128,8 +192,9 @@ void Discirminant::readTestData(string path) {
     topSort();
     endTime = clock();
     double totalTime = double(endTime - startTime)/CLOCKS_PER_SEC;
-    cout<<"ifstream running time:"<<totalTime<<"s"<<endl;
+    cout<<"fread running time:"<<totalTime<<"s"<<endl;
 }
+
 
 void Discirminant::topSort(){
     //构建临时图,保持temGraph完整性，删减graph中的顶点，
@@ -363,7 +428,7 @@ void Discirminant::run() {
 
 int main() {
     //system("chcp 65001"); //解决win下打印出乱码的问题
-    string testFile = "../data/myText.txt";
+    string testFile = "../data/test_data.txt";
     string resultFile = "../projects/student/result.txt";
 
     clock_t startTime,endTime,endTime1;
